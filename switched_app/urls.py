@@ -9,4 +9,7 @@ urlpatterns = [
     # Map to a detailed game view
     path('game/<int:pk>', views.GameDetailView.as_view(), name='game-detail'),
 
+    # Create the review form
+    path('game/<int:game_id>/create_review/', views.createReview, name='create-review'),
+
 ]

@@ -7,7 +7,7 @@
 {% block content %}
 <h1> Check out the latest games! </h1>
 
-<div class="container-fluid p-3">
+<div class="container-md p-3">
     <div class="row">
 
         <!-- For each game passed as context, create a new card -->
@@ -21,7 +21,7 @@
                     <h5 class="card-title">{{game.title}}</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary"></h6>
                     <p class="card-text">Maybe show star rating here...</p>
-                    <a href="{{game.get_absolute_url}}" class="btn btn-primary stretched-link">Explore</a>
+                    <a href="{{game.get_absolute_url}}" class="btn btn-dark stretched-link">Explore</a>
                 </div>
             </div>
         </div>
