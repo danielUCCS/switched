@@ -1,0 +1,41 @@
+<!-- Extend the base html page -->
+{% extends 'switched_app/base_template.html' %}
+
+<!-- Fills in the block content from base template -->
+{% block content %}
+  <!-- Insert a blank space -->
+  <div class="container p-3"></div>
+
+  <!-- Heading -->
+  <div class="container-md rounded-3 p-4  text-center" style="background-color: #EDEDED;">
+    <div class="row">
+      <div class="col">
+        <img src="{{ game.coverart.url }}" class="img-fluid rounded-3" alt="Mario Cover" />
+      </div>
+      <div class="col">
+        <h1 class="fs-1">{{ game.title }}</h1>
+        <p class="fs-3">Game description: {{ game.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insert a blank space -->
+  <div class="container p-3"></div>
+
+  <!-- Heading -->
+  <div class="container-md rounded-5 p-3 text-white text-center" style="background-color: #e60012;">
+    <h1>Reviews will go here...</h1>
+
+    {% if review_list %}
+      <ul>
+        {% for review in review_list %}
+          <li>
+            {{ review.title }}:
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>There are no reviews.</p>
+    {% endif %}
+  </div>
+{% endblock %}
