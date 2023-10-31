@@ -9,12 +9,14 @@
   <!-- Heading -->
   <div class="container-md rounded-3 p-4 text-center" style="background-color: #EDEDED;">
     <div class="row">
-      <div class="col">
-        <img src="{{ game.coverart.url }}" class="img-fluid rounded-3" alt="Mario Cover" />
+      <div class="col-lg">
+        <img src="{{ game.coverart.url }}" class="img-fluid rounded-3" alt="Game Cover" />
       </div>
-      <div class="col">
+      <div class="col-lg">
         <h1 class="fs-1">{{ game.title }}</h1>
-        <p class="fs-3">Game description: {{ game.description }}</p>
+        <p class="fs-3">{{ game.description }}</p>
+        <a href="#" class="btn btn-lg text-white" style="background-color: #e60012;">Nintendo</a>
+        <a href="#" class="btn btn-lg" style="background-color: #EDE100;">Best Buy</a>
       </div>
     </div>
   </div>
@@ -30,23 +32,31 @@
         <a href="{% url 'create-review' game.id %}" class="btn btn-lg text-white" style="background-color: #e60012;">Leave Review</a>
       </div>
       <div class="col">
-        <div class="container text-center">
-          <h1>Overall Rating: STARS HERE?</h1>
+        <div class="container text-center fs-3">
+          <p>Overall Rating: **STARS HERE**</p>
         </div>
       </div>
     </div>
 
+    <!-- List out all reviews -->
     {% if review_list %}
       {% for review in review_list %}
-        <div class="container rounded-3 p-3" style="background-color: #FFFFFF;">
+        <div class="container rounded-3 p-4" style="background-color: #FFFFFF;">
           <h1>{{ review.title }}</h1>
-          <p>{{ review.rating }}</p>
+          <h2>{{ review.rating }}/10 Stars</h2>
           <p>{{ review.description }}</p>
+
+          <!-- Buttons for updating our deleting a review -->
+          <a href="{% url 'update-review' game.id review.id %}" class="btn btn-lg text-white" style="background-color: #e60012;">Update Review</a>
+          <a href="{% url 'delete-review' game.id review.id %}" class="btn btn-lg text-white" style="background-color: #e60012;">Delete Review</a>
+
         </div>
         <div class="container p-3"></div>
       {% endfor %}
     {% else %}
-      <p>There are no reviews.</p>
+    <div class="container text-center p-3 fs-3">
+      <p>There aren't any reviews yet... click the button above to leave one!</p>
+    </div>
     {% endif %}
   </div>
 {% endblock %}

@@ -45,3 +45,44 @@ def createReview(request, game_id):
 
     context = {'form': form}
     return render(request, 'switched_app/review_form.html', context)
+
+    # Update a project. We need both game and review id
+def updateReview(request, game_id, review_id):
+    game = Game.objects.get(pk=game_id)
+    review = Review.objects.get(id=review_id)
+    
+    # Fill form with project instance
+    form = ReviewForm(instance=review)
+
+    # If request is POST
+    if request.method == 'POST':
+
+        # Update form
+        form = ReviewForm(request.POST, instance=review)
+
+        if form.is_valid():
+            # Update the project
+            form.save()
+
+            # Redirect back to the portfolio detail page
+            return redirect('game-detail', game_id)
+
+    context = {'form': form}
+    return render(request, 'switched_app/review_form.html', context)
+
+# Delete a project from the database. Needs a portfolio id and project id
+def deleteReview(request, game_id, review_id):
+    
+    # Filter desired project and portfolio objects
+    review=Review.objects.filter(id=review_id)
+    game=Game.objects.get(id=game_id)
+
+    # If request is POST
+    if request.method == 'POST':
+        # Delete the object and return to portfolio page
+        review.delete()
+        return redirect('game-detail', game_id)
+        
+    # Send the game as context to render function
+    context = {'item': game}
+    return render(request, 'switched_app/delete_review.html', context)

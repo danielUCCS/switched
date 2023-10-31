@@ -12,4 +12,10 @@ urlpatterns = [
     # Create the review form
     path('game/<int:game_id>/create_review/', views.createReview, name='create-review'),
 
+    # Update the review
+    path('game/<int:game_id>/update_review/<int:review_id>', views.updateReview, name='update-review'),
+
+    # Delete the review
+    path('game/<int:game_id>/delete_review/<int:review_id>', views.deleteReview, name='delete-review'),
+
 ]

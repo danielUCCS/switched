@@ -12,23 +12,20 @@
 <!-- Navbar -->
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #e60012;">
-    <div class="container-fluid">
-      <a class="navbar-brand fs-4" href="{% url 'index' %}">Switch.ed</a>
+    <div class="container-lg">
+      <a class="navbar-brand" href="{% url 'index' %}">Switch.ed</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active fs-4" aria-current="page" href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-4" href="#">Log in</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
           </li>
         </ul>
       </div>
     </div>
-</nav>
+</nav> 
 
 <!-- This is where additional content that extends the base template will go -->
 {% block content %}
