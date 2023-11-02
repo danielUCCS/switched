@@ -5,32 +5,33 @@
 
 <!-- Fills in the block content from base template -->
 {% block content %}
-<div class="container-sm text-center">
-    <h1> Check out the latest games! </h1>
-</div>
+  <div class="container-sm text-center">
+    <h1>Check out the latest games!</h1>
+  </div>
 
-<div class="container-lg p-3">
+  <div class="container-lg p-3">
     <div class="row justify-content-center row-cols-auto gy-3">
-
+      {% if games %}
         <!-- For each game passed as context, create a new card -->
         {% for game in games %}
-
-        <!-- Cards are clickable using a stretched link -->
-        <div class="col">
+          <!-- Cards are clickable using a stretched link -->
+          <div class="col">
             <div class="card text-white" style="background-color: #e60012; width: 25rem;">
-                <img src="{{ game.coverart.url }}" class="card-img-top" alt="Cover Photo">
-                <div class="card-body">
-                    <h5 class="card-title fs-4">{{game.title}}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary"></h6>
-                    <p class="card-text">**ADDITIONAL TEXT**</p>
-                    <a href="{{game.get_absolute_url}}" class="btn btn-dark stretched-link">Explore</a>
-                </div>
+              <img src="{{ game.coverart.url }}" class="card-img-top" alt="Cover Photo" />
+              <div class="card-body">
+                <h5 class="card-title fs-4">{{ game.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary"></h6>
+                <p class="card-text">**ADDITIONAL TEXT**</p>
+                <a href="{{ game.get_absolute_url }}" class="btn btn-dark stretched-link">Explore</a>
+              </div>
             </div>
-        </div>
-
+          </div>
         {% endfor %}
-
+      {% else %}
+        <div class="container-sm text-center">
+          <h1>Looks like there aren't any games yet...</h1>
+        </div>
+      {% endif %}
     </div>
-</div>
-
+  </div>
 {% endblock %}
