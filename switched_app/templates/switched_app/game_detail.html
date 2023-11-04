@@ -41,7 +41,7 @@
     <!-- List out all reviews -->
     {% if review_list %}
       {% for review in review_list %}
-        <div class="container rounded-3 p-4" style="background-color: #FFFFFF;">
+        <div class="container rounded-3 fs-3 p-4" style="background-color: #FFFFFF;">
           <h1>{{ review.title }}</h1>
           <h2>{{ review.rating }}/10 Stars</h2>
           <p>{{ review.description }}</p>

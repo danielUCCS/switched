@@ -38,8 +38,8 @@ class Review(models.Model):
         (9, '9 Stars'),
         (10, '10 Stars'),
     )
+
     rating = models.IntegerField(choices=RATING)
-    
     title = models.CharField(max_length=50)
     description = models.TextField()
 

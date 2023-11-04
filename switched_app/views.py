@@ -10,6 +10,10 @@ def index(request):
     games = Game.objects.all() # Generate queryset of all game objects 
     return render (request, 'switched_app/index.html', {'games':games}) # Convert games to dict and pass as context. Not entirely sure how that works...
 
+# Help page
+def help(request):
+    return render (request, 'switched_app/help.html')
+
 class GameDetailView(generic.DetailView):
     model = Game
 
