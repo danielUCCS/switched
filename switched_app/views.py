@@ -4,6 +4,47 @@ from .models import Game
 from .models import Review
 from django.views import generic
 from .forms import ReviewForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+# Importing models here
+from .models import Game
+from .models import Review
+from django.contrib.auth.models import User
+
+# Importing forms here
+from .forms import ReviewForm
+from .forms import CreateUserForm
+from django.contrib.auth.forms import UserCreationForm
+
+# Import authenitcators
+from .decorators import unauthenticated_user, allowed_users
+
+# User registration page
+def registerPage(request):
+    form = CreateUserForm()
+
+    # If request is POST
+    if request.method == 'POST':
+
+        # If form is valid, pass in the request
+        form = CreateUserForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            # Get username from form
+            username = form.cleaned_data.get('username')
+
+            # Display a flash message to user upon successful account creation 
+            messages.success(request, 'Successfully added account for ' + username)
+
+            # Redirect to portfolio detail page
+            return redirect('login')
+
+    context = {'form':form}
+    return render(request, 'accounts/register.html', context)
 
 # Home page
 def index(request):
@@ -23,15 +64,17 @@ class GameDetailView(generic.DetailView):
         # Create any data and add it to the context
         context['review_list'] = Review.objects.filter(game_id=self.object.id)
         return context
-    
+
 # Form for creating a new review
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def createReview(request, game_id):
     form = ReviewForm()
     game = Game.objects.get(pk=game_id)
     
     if request.method == 'POST':
         
-        # If form is valid, pass in the request
+        # If request is POST
         form = ReviewForm(request.POST)
         
         # If the form is valid, create a new project
@@ -42,6 +85,7 @@ def createReview(request, game_id):
 
             # Set the game relationship
             review.game = game
+            review.user = request.user
             review.save()
 
             # Redirect to portfolio detail page
@@ -50,7 +94,7 @@ def createReview(request, game_id):
     context = {'form': form}
     return render(request, 'switched_app/review_form.html', context)
 
-    # Update a project. We need both game and review id
+# Update a project. We need both game and review id
 def updateReview(request, game_id, review_id):
     game = Game.objects.get(pk=game_id)
     review = Review.objects.get(id=review_id)

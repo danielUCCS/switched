@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 # Create the game model
@@ -45,3 +46,6 @@ class Review(models.Model):
 
     # one-to-many relationship w/ games. One game can have many reviews.
     game = models.ForeignKey(Game, on_delete=models.CASCADE, default = None)
+
+    # one-to-many relationship w/ user
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)

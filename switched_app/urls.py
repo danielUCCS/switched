@@ -1,4 +1,5 @@
 from django.urls import path
+from django.urls import include
 from . import views
 
 urlpatterns = [
@@ -20,5 +21,11 @@ urlpatterns = [
 
     # Delete the review
     path('game/<int:game_id>/delete_review/<int:review_id>', views.deleteReview, name='delete-review'),
+
+    # Import default authentication urls
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    # Add registration page
+    path('accounts/register/', views.registerPage, name='register-page')
 
 ]

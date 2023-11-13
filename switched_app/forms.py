@@ -1,8 +1,18 @@
 from django.forms import ModelForm
 from .models import Review
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
-#create class for project form
+# Create class for project form
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ('title', 'description', 'rating')
+
+
+
+# Create class for user form
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
