@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-
 # Create the game model
 class Game(models.Model):
 
@@ -17,7 +16,7 @@ class Game(models.Model):
     description = models.TextField()
 
     # Path for coverart image 
-    coverart = models.ImageField(upload_to="images/")
+    coverart = models.ImageField(upload_to="images/", default="images/default.gif", blank=True)
 
 # Create the review model
 class Review(models.Model):
