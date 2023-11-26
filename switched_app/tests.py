@@ -166,34 +166,3 @@ class LoginTest(LiveServerTestCase):
 
     def tearDown(self):
         self.driver.quit()
-
-""" class NewReviewTest(LiveServerTestCase):
-    def setUp(self):
-        Game.objects.create(title="test game with image", description="test game description", coverart="images/testimage.gif") # Image specified
-        self.user = User.objects.create_user(username="test_user", password="passwd123")
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(2)
-
-    def test_create_valid_review(self):
-        
-        # Visit home page
-        self.driver.get(self.live_server_url)
-
-        # Visit the page for a game
-        self.driver.find_element(By.LINK_TEXT, "Explore").click()
-
-        # Select button to leave review
-        self.driver.find_element(By.LINK_TEXT, "Leave Review").click()
-
-        # Log into account
-        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
-        self.driver.find_element(By.ID, "id_password").send_keys("passwd123")
-        self.driver.find_element(By.ID, "id_login").click()
-
-        # Enter valid review data
-        review_title = self.driver.find_element(By.ID, 'id_title')
-        review_description = self.driver.find_element(By.ID, "id_description")
-        #review_rating
-
-    def tearDown(self):
-        self.driver.quit() """
