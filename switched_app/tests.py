@@ -7,6 +7,12 @@ from django.contrib.auth.models import User
 from .forms import ReviewForm
 from .forms import CreateUserForm
 
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
+
 # Test the game model
 class GameTestCase(TestCase):
     def setUp(self):
@@ -66,3 +72,128 @@ class ReviewFormTest(TestCase):
         data = {'title':TestReview.title, 'description':TestReview.description,}
         form = ReviewForm(data=data)
         self.assertFalse(form.is_valid())
+
+# Test signing up for account 
+class SignUpTest(LiveServerTestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+
+    def test_valid_signup(self): 
+        # Visit home page
+        self.driver.get(self.live_server_url)
+
+        # Visit the page signing up
+        self.driver.find_element(By.LINK_TEXT, "Sign Up").click()
+
+        # Enter valid data for account creation
+        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
+        self.driver.find_element(By.ID, "id_email").send_keys("email@mail.com")
+        self.driver.find_element(By.ID, "id_password1").send_keys("passwd123")
+        self.driver.find_element(By.ID, "id_password2").send_keys("passwd123")
+
+        self.driver.find_element(By.ID, "id_submit").click()
+
+        # See if successful account creation message is present
+        body_text = self.driver.find_element(By.TAG_NAME, "body").text
+
+        self.assertTrue("Successfully added account for test_user" in body_text)
+
+    def test_invalid_signup(self): 
+        # Visit home page
+        self.driver.get(self.live_server_url)
+
+        # Visit the page signing up
+        self.driver.find_element(By.LINK_TEXT, "Sign Up").click()
+
+        # Enter valid data for account creation
+        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
+        self.driver.find_element(By.ID, "id_email").send_keys("email@mail.com")
+        self.driver.find_element(By.ID, "id_password1").send_keys("passwd123")
+        self.driver.find_element(By.ID, "id_password2").send_keys("passwd1234")
+
+        self.driver.find_element(By.ID, "id_submit").click()
+
+        # See if successful account creation message is present
+        body_text = self.driver.find_element(By.TAG_NAME, "body").text
+
+        self.assertTrue("The two password fields didn’t match" in body_text)
+
+    def tearDown(self):
+        self.driver.quit()
+
+# Test loggin into account
+class LoginTest(LiveServerTestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="test_user", password="passwd123")
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(2)
+
+    def test_valid_login(self):
+        
+        # Visit home page
+        self.driver.get(self.live_server_url)
+
+        # Visit login page
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+
+        # Log into account
+        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
+        self.driver.find_element(By.ID, "id_password").send_keys("passwd123")
+        self.driver.find_element(By.ID, "id_login").click()
+
+        # See if successful login
+        body_text = self.driver.find_element(By.TAG_NAME, "body").text
+
+        self.assertTrue("Logout test_user" in body_text)
+
+    def test_invalid_login(self):
+        
+        # Visit home page
+        self.driver.get(self.live_server_url)
+
+        # Visit login page
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+
+        # Log into account
+        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
+        self.driver.find_element(By.ID, "id_password").send_keys("passwd1234")
+        self.driver.find_element(By.ID, "id_login").click()
+
+        # See if successful login
+        body_text = self.driver.find_element(By.TAG_NAME, "body").text
+
+        self.assertTrue("Your username and password didn't match. Please try again." in body_text)
+
+    def tearDown(self):
+        self.driver.quit()
+
+""" class NewReviewTest(LiveServerTestCase):
+    def setUp(self):
+        Game.objects.create(title="test game with image", description="test game description", coverart="images/testimage.gif") # Image specified
+        self.user = User.objects.create_user(username="test_user", password="passwd123")
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(2)
+
+    def test_create_valid_review(self):
+        
+        # Visit home page
+        self.driver.get(self.live_server_url)
+
+        # Visit the page for a game
+        self.driver.find_element(By.LINK_TEXT, "Explore").click()
+
+        # Select button to leave review
+        self.driver.find_element(By.LINK_TEXT, "Leave Review").click()
+
+        # Log into account
+        self.driver.find_element(By.ID, 'id_username').send_keys("test_user")
+        self.driver.find_element(By.ID, "id_password").send_keys("passwd123")
+        self.driver.find_element(By.ID, "id_login").click()
+
+        # Enter valid review data
+        review_title = self.driver.find_element(By.ID, 'id_title')
+        review_description = self.driver.find_element(By.ID, "id_description")
+        #review_rating
+
+    def tearDown(self):
+        self.driver.quit() """
