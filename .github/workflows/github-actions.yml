@@ -1,5 +1,5 @@
 name: Django CI
-
+run-name: ${{ github.actor }} is testing the project
 on:
   push:
     branches: [ $default-branch ]
@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       max-parallel: 4
       matrix:
