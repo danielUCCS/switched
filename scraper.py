@@ -36,23 +36,21 @@ print(heading_element.text)
 print(description_element.text)
 print(image_url_element.attrs['src'])
 
-data = {title_element.text,
-        price_element.text,
-        heading_element.text,
-        description_element.text,
-        image_url_element.attrs['src']
+list = [title_element.text, price_element.text, heading_element.text, description_element.text, image_url_element.attrs['src']]
+
+print(list)
+print(list[0])
+
+""" data = {'title': title_element.text,
+        'price': price_element.text,
+        'heading': heading_element.text,
+        'description': description_element.text,
+        'img_src': image_url_element.attrs['src']
         }
 
-""" data = {"title": title_element.text,
-        "price": price_element.text,
-        "heading": heading_element.text,
-        "description": description_element.text,
-        "img src": image_url_element.attrs['src']
-        } """
-
 list.append(data)
+"""
 
 driver.quit()
 
-df = pd.DataFrame(list)
-df.to_csv('Nintendo.csv', index=False)
+df = pd.DataFrame(list).to_csv('Nintendo.csv', index=False)

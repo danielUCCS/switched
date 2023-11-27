@@ -13,7 +13,10 @@ class Game(models.Model):
         return reverse('game-detail', args=[str(self.id)])
     
     title = models.CharField(max_length=50)
+    price = models.CharField(max_length=50)
+    heading = models.CharField(max_length=50)
     description = models.TextField()
+    img_src = models.CharField(max_length=50)
 
     # Path for coverart image 
     coverart = models.ImageField(upload_to="images/", default="images/default.gif", blank=True)
