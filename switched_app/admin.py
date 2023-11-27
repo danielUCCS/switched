@@ -24,10 +24,15 @@ class GameModelManager(admin.ModelAdmin):
             csv_file = request.FILES["csv_upload"]
 
             file_data = csv_file.read().decode("utf-8")
-            csv_data = csv_file.split("\n")
+            csv_data = file_data.split("\n")
 
             for x in csv_data:
-                fields = x.split
+                fields = x.split(",")
+                print(fields[0])
+                #print(fields[1])
+                #print(fields[2])
+                #print(fields[3])
+                #print(fields[4])
 
         form = CSVImportForm()
         context = {"form": form}

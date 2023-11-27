@@ -36,12 +36,19 @@ print(heading_element.text)
 print(description_element.text)
 print(image_url_element.attrs['src'])
 
-data = {"title": title_element.text,
+data = {title_element.text,
+        price_element.text,
+        heading_element.text,
+        description_element.text,
+        image_url_element.attrs['src']
+        }
+
+""" data = {"title": title_element.text,
         "price": price_element.text,
         "heading": heading_element.text,
         "description": description_element.text,
         "img src": image_url_element.attrs['src']
-        }
+        } """
 
 list.append(data)
 
