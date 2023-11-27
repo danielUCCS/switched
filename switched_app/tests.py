@@ -166,3 +166,5 @@ class LoginTest(LiveServerTestCase):
 
     def tearDown(self):
         self.driver.quit()
+
+# adding something to test coverage

@@ -67,7 +67,7 @@ class GameDetailView(generic.DetailView):
 
 # Form for creating a new review
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['reviewer', 'admin'])
+#@allowed_users(allowed_roles=['reviewer', 'admin'])
 def createReview(request, game_id):
     form = ReviewForm()
     game = Game.objects.get(pk=game_id)
@@ -97,7 +97,7 @@ def createReview(request, game_id):
 # Update a project. We need both game and review id
 # Form for creating a new review
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['reviewer', 'admin'])
+#@allowed_users(allowed_roles=['reviewer', 'admin'])
 def updateReview(request, game_id, review_id):
     game = Game.objects.get(pk=game_id)
     review = Review.objects.get(id=review_id)
@@ -124,7 +124,7 @@ def updateReview(request, game_id, review_id):
 # Delete a project from the database. Needs a portfolio id and project id
 # Form for creating a new review
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['reviewer', 'admin'])
+#@allowed_users(allowed_roles=['reviewer', 'admin'])
 def deleteReview(request, game_id, review_id):
     
     # Filter desired project and portfolio objects
