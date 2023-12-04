@@ -27,32 +27,10 @@ class GameModelManager(admin.ModelAdmin):
             df = pd.read_csv(csv_file)
             data = df.values.tolist()
 
-            print(data[0][0])
-            print(data[1][0])
-            print(data[2][0])
-            print(data[3][0])
-            print(data[4][0])
-
-            newGame = Game(title = data[0][0], price = data[1][0], heading = data[2][0], description = data[3][0], img_src = data[4][0])
+            newGame = Game(title = data[0][0], price = data[1][0], heading = data[2][0], description = data[3][0], game_url = data[4][0])
             newGame.save()
-            
-            """
-            data = df.to_dict('list')
+            newGame.get_image_from_url(data[5][0])
 
-            print(data["title"])
-            print(data["price"])
-            print(data["heading"])
-            print(data["description"])
-            print(data["img src"])
-
-            newGame = Game(title = data["title"], price = data["price"], heading = data["heading"], description = data["description"], img_src = data["img src"])
-            newGame.save()
-
-            title = data["title"]
-            price = data["price"]
-            heading = data["heading"]
-            description = data["description"]
-            img_src = data["img src"] """
 
         form = CSVImportForm()
         context = {"form": form}

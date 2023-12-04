@@ -1,6 +1,9 @@
 from django.db import models
+from urllib.request import urlopen
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 # Create the game model
 class Game(models.Model):
@@ -16,10 +19,22 @@ class Game(models.Model):
     price = models.CharField(max_length=50)
     heading = models.CharField(max_length=50)
     description = models.TextField()
-    img_src = models.CharField(max_length=50)
+    game_url = models.TextField()
 
     # Path for coverart image 
-    coverart = models.ImageField(upload_to="images/", default="images/default.gif", blank=True)
+    coverart = models.ImageField(upload_to="images/", default="images/default.gif", null=True, blank=True)
+    cover_url = models.ImageField(blank=True, null=True)
+
+    # function for downloading image from scraped URL
+    def get_image_from_url(self, url):
+        img_tmp = NamedTemporaryFile()
+        with urlopen(url) as uo:
+            assert uo.status == 200
+            img_tmp.write(uo.read())
+            img_tmp.flush()
+        img = File(img_tmp)
+        self.coverart.save('img_tmp', img)
+        self.cover_url = url
 
 # Create the review model
 class Review(models.Model):
