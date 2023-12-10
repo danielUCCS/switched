@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # URL to scrape
-URL = "https://www.nintendo.com/us/store/products/splatoon-2-switch/"
+URL = "https://www.nintendo.com/us/store/products/the-legend-of-zelda-breath-of-the-wild-switch/"
 
 # Set up selenium
 driver = webdriver.Firefox() # configure firefox webdriver
