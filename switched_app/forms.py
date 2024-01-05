@@ -3,13 +3,11 @@ from .models import Review
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-# Create class for project form
+# Create class for review form
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ('title', 'description', 'rating')
-
-
 
 # Create class for user form
 class CreateUserForm(UserCreationForm):

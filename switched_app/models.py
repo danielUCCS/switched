@@ -19,7 +19,7 @@ class Game(models.Model):
     price = models.CharField(max_length=50)
     heading = models.CharField(max_length=50)
     description = models.TextField()
-    game_url = models.TextField()
+    game_url = models.URLField()
 
     # Path for coverart image 
     coverart = models.ImageField(upload_to="images/", default="images/default.gif", null=True, blank=True)

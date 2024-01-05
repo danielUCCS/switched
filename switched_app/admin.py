@@ -5,37 +5,32 @@ from django.shortcuts import render
 from django import forms
 from .models import Game
 from .models import Review
+from .scraper import ScrapeURL
 
 import pandas as pd
 
-class CSVImportForm(forms.Form):
-    csv_upload = forms.FileField()
+# Custom game form, only requests a URL
+class GameForm(forms.ModelForm):
+    class Meta:
+        model = Game
+        fields = ['game_url']
 
-class GameModelManager(admin.ModelAdmin):
+class GameAdmin(admin.ModelAdmin):
+    form = GameForm
 
-    def get_urls(self):
-        urls = super().get_urls()
-        new_urls = [path("upload-csv/", self.admin_site.admin_view(self.upload_csv))]
-        return new_urls + urls
+    def save_model(self, request, obj, form, change):
+        
+        data = ScrapeURL(obj.game_url)
 
-    def upload_csv(self, request):
+        obj.title = data[0]
+        obj.price = data[1]
+        obj.heading = data[2]
+        obj.description = data[3]
 
-        # If request is POST
-        if request.method == 'POST':
-
-            csv_file = request.FILES["csv_upload"]
-            df = pd.read_csv(csv_file)
-            data = df.values.tolist()
-
-            newGame = Game(title = data[0][0], price = data[1][0], heading = data[2][0], description = data[3][0], game_url = data[4][0])
-            newGame.save()
-            newGame.get_image_from_url(data[5][0])
-
-
-        form = CSVImportForm()
-        context = {"form": form}
-        return render(request, "admin/csv_upload.html", context)
+        obj.get_image_from_url(data[4])
+        
+        super().save_model(request, obj, form, change)
 
 # Register your models here.
 admin.site.register(Review)
-admin.site.register(Game, GameModelManager)
+admin.site.register(Game, GameAdmin)
