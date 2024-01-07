@@ -20,6 +20,7 @@ class GameAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         
+        # Call the scraper function to get game data, then save to object
         data = ScrapeURL(obj.game_url)
 
         obj.title = data[0]

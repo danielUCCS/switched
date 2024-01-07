@@ -13,7 +13,10 @@ def ScrapeURL(URL):
     driver.get(URL)
 
     # Wait for price to show
-    element = WebDriverWait(driver=driver, timeout=5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.cgoQnQ")))
+    try:
+        element = WebDriverWait(driver=driver, timeout=5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.cgoQnQ")))
+    except:
+        print("Unable to detect price")
 
     # Grab page source and quit
     page_source = driver.page_source
@@ -23,18 +26,38 @@ def ScrapeURL(URL):
     soup = BeautifulSoup(page_source, 'html.parser')
     results = soup.find(id="main")
 
-    title_element = results.find("h1", class_="Headingstyles__StyledH-sc-s17bth-0 eQifGC")
-    price_element = results.find("p", class_="Textstyles__StyledPara-sc-w55g5t-4 dQCCpW RadioDetailedstyles__Price-sc-d1kg1d-5 cTzeTR")
-    heading_element = results.find("h2", class_="Headingstyles__StyledH-sc-s17bth-0 vsVuC")
-    description_element = results.find("div", class_="RichTextstyles__Html-sc-16r5mbt-1 kdsZWM clamp")
-    image_url_element = results.find("div", class_="MediaGallerystyles__CropFrame-sc-1fakp5g-6 eDOgNa").find("img")
+    try:
+        title = results.find("h1", class_="Headingstyles__StyledH-sc-s17bth-0 eQifGC").text
+    except:
+        title = "null"
+    
+    try:
+        price = results.find("p", class_="Textstyles__StyledPara-sc-w55g5t-4 dQCCpW RadioDetailedstyles__Price-sc-d1kg1d-5 cTzeTR").text
+    except:
+        price = "null"
+    
+    try:
+        heading = results.find("h2", class_="Headingstyles__StyledH-sc-s17bth-0 vsVuC").text
+    except:
+        heading = "null"
 
-    print(title_element.text)
-    print(price_element.text)
-    print(heading_element.text)
-    print(description_element.text)
-    print(image_url_element.attrs['src'])
+    try:
+        description = results.find("div", class_="RichTextstyles__Html-sc-16r5mbt-1 kdsZWM clamp").text
+    except:
+        description = "null"
 
-    list = [title_element.text, price_element.text, heading_element.text, description_element.text, image_url_element.attrs['src']]
+    try:
+        image_url = results.find("div", class_="MediaGallerystyles__CropFrame-sc-1fakp5g-6 eDOgNa").find("img").attrs['src']
+    except:
+        image_url = "null"
+
+    # Print out scraped data for testing
+    print(title)
+    print(price)
+    print(heading)
+    print(description)
+    print(image_url)
+
+    list = [title, price, heading, description, image_url]
 
     return list 

@@ -28,13 +28,17 @@ class Game(models.Model):
     # function for downloading image from scraped URL
     def get_image_from_url(self, url):
         img_tmp = NamedTemporaryFile()
-        with urlopen(url) as uo:
-            assert uo.status == 200
-            img_tmp.write(uo.read())
-            img_tmp.flush()
-        img = File(img_tmp)
-        self.coverart.save('img_tmp', img)
-        self.cover_url = url
+
+        try:
+            with urlopen(url) as uo:
+                assert uo.status == 200
+                img_tmp.write(uo.read())
+                img_tmp.flush()
+            img = File(img_tmp)
+            self.coverart.save('img_tmp', img)
+            self.cover_url = url
+        except:
+            pass
 
 # Create the review model
 class Review(models.Model):
