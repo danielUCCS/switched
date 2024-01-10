@@ -34,6 +34,7 @@ class GameAdmin(admin.ModelAdmin):
 
             game = Game()
 
+            game.game_url = URL
             game.title = data[0]
             game.price = data[1]
             game.heading = data[2]
@@ -42,6 +43,8 @@ class GameAdmin(admin.ModelAdmin):
             game.get_image_from_url(data[4])
 
             game.save()
+
+            return redirect('admin:index')
 
         form = GameForm()
         context = {"form": form}

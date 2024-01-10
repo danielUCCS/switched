@@ -27,7 +27,7 @@ class Game(models.Model):
 
     # function for downloading image from scraped URL
     def get_image_from_url(self, url):
-        img_tmp = NamedTemporaryFile()
+        img_tmp = NamedTemporaryFile(delete=True)
 
         try:
             with urlopen(url) as uo:
