@@ -27,11 +27,9 @@ class GameAdmin(admin.ModelAdmin):
 
             URL = request.POST.get('game_url')
 
-            print("-----HERES THE URL-----")
-            print(URL)
-
             data = ScrapeURL(URL)
 
+            # Add some 
             game = Game()
 
             game.game_url = URL
@@ -49,22 +47,6 @@ class GameAdmin(admin.ModelAdmin):
         form = GameForm()
         context = {"form": form}
         return render(request, 'admin/game_form.html', context)
-
-    '''
-    def save_model(self, request, obj, form, change):
-        
-        # Call the scraper function to get game data, then save to object
-        data = ScrapeURL(obj.game_url)
-
-        obj.title = data[0]
-        obj.price = data[1]
-        obj.heading = data[2]
-        obj.description = data[3]
-
-        obj.get_image_from_url(data[4])
-        
-        super().save_model(request, obj, form, change)
-    '''
 
 # Register your models here.
 admin.site.register(Review)
