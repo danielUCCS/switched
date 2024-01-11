@@ -1,0 +1,18 @@
+{% extends 'admin/base.html' %}
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+
+<div class="container-sm">
+    <form action="" method="POST">
+
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input id="id_submit" type="submit" name="Submit">
+    
+    </form>
+</div>
+
+{% endblock %}
