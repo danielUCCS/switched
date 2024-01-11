@@ -2,13 +2,11 @@ from django.contrib import admin
 from django.template.response import TemplateResponse
 from django.urls import path
 from django.shortcuts import render
-from django.shortcuts import redirect # DONT FORGET THIS
+from django.shortcuts import redirect
 from django import forms
 from .models import Game
 from .models import Review
 from .scraper import ScrapeURL
-
-import pandas as pd
 
 # Custom game form, only requests a URL
 class GameForm(forms.Form):
@@ -29,15 +27,13 @@ class GameAdmin(admin.ModelAdmin):
 
             data = ScrapeURL(URL)
 
-            # Add some 
+            # Create new game object from list data
             game = Game()
-
             game.game_url = URL
             game.title = data[0]
             game.price = data[1]
             game.heading = data[2]
             game.description = data[3]
-
             game.get_image_from_url(data[4])
 
             game.save()

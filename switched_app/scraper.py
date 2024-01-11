@@ -4,25 +4,24 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-import pandas as pd
 
 def ScrapeURL(URL):
 
-    # Set up selenium
+    # Start new browser session, navigate to URL
     driver = webdriver.Firefox() # configure firefox webdriver
     driver.get(URL)
 
-    # Wait for price to show
+    # Wait for price element to load
     try:
         element = WebDriverWait(driver=driver, timeout=5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.cgoQnQ")))
     except:
         print("Unable to detect price")
 
-    # Grab page source and quit
+    # Grab page source and close session
     page_source = driver.page_source
     driver.quit()
 
-    # Moving to beautfiful soup to parse data
+    # Create new soup object to parse html
     soup = BeautifulSoup(page_source, 'html.parser')
     results = soup.find(id="main")
 
